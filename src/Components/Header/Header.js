@@ -21,7 +21,7 @@ const Header = () => {
                     </li>
                     <li>
 
-                        <Link to='/auth/login'>
+                        <Link to='/auth'>
                         <button className="border border-purple-500 px-4 py-1 md:my-0 my-1 text-white  mr-4 ">Sign In</button>
                         
                         </Link>
