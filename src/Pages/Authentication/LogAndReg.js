@@ -1,3 +1,4 @@
+import { animate, motion } from 'framer-motion';
 import React from 'react';
 import { useState } from 'react';
 import Login from './Login';
@@ -5,22 +6,93 @@ import Register from './Register';
 
 const LogAndReg = () => {
 
-    const [animation,setAnimation]= useState(true)
-console.log(animation);
+    const [animation, setAnimation] = useState(true)
+    console.log(animation);
+
+    const change = () => {
+        console.log('clicked')
+        return setAnimation(!animation)
+    }
+
     return (
         <section className='relative overflow-hidden h-screen'>
-            <div  className='absolute  left-40 top-10'>
-                <Login animation={animation} setAnimation={setAnimation}></Login>
+            <motion.div
+                transition={{
+                    duration: 0.5
+                }}
+                animate={{
+                    scale: animation ? 1 : 0,
+                    opacity: animation ? 1 : 0
+                }}
+                className={`absolute   left-40 top-10 ${animation ? 'z-50' : 'z-0 '}`}>
+                <Login change={change} animation={animation} setAnimation={setAnimation}></Login>
 
-            </div>
-            <div className='absolute  right-40 top-10'>
+            </motion.div>
+            <motion.div
+                transition={{
+                    duration: 0.5
+                }}
+                animate={{
+                    scale: animation ? 0 : 1,
+                    opacity: animation ? 0 : 1
+                }}
+                className={`absolute  right-40 top-10 ${animation ? 'z-0 ' : 'z-50 '}`}>
 
-                <Register animation={animation} setAnimation={setAnimation}></Register>
-            </div>
-            <div className={`w-[1500px] overflow-hidden transition-all rotate-180 absolute z-10  top-[-50px] ${animation ? 'right-[-400px]':'left-[-400px]'}`}>
-            <img src="https://i.ibb.co/ZcbsDGF/blob-haikei.png" className='w-full' alt="" />
-            
-            </div>
+                <Register change={change} animation={animation} setAnimation={setAnimation}></Register>
+            </motion.div>
+            <motion.div
+                animate={{
+
+                    opacity: animation ? 0 : 1
+                }}
+                initial={{
+                    opacity:0
+                }}
+                // transition={{
+                //     duration:1
+                // }}
+                className='absolute z-40 top-40 left-32'
+            >
+
+                <h1 className='text-5xl font-bold text-white'>Please Register </h1>
+                <h1 className='text-3xl font-bold text-white'>If You are a New User</h1>
+                <p className='text-font-semibold w-96 my-2 text-white'>
+                    News Media is a news website. It is better known for its authentic news and updates. We post daily news about politics, entertainment, sports, art etc. And We allow that any user can be a reporter for us*.
+
+                </p>
+            </motion.div>
+            <motion.div
+                animate={{
+
+                    opacity: animation ? 1 : 0
+                }}
+                
+                className='absolute z-40 top-40 right-60'
+            >
+
+                <h1 className='text-5xl font-bold text-white'>Please Login </h1>
+                <p className='text-font-semibold w-96 my-2 text-white'>
+                    News Media is a news website. It is better known for its authentic news and updates. We post daily news about politics, entertainment, sports, art etc. And We allow that any user can be a reporter for us*.
+
+                </p>
+            </motion.div>
+            <motion.div
+                animate={{
+                    x: animation ? '50px' : '-400px',
+                    rotate: animation ? 360 : 180
+                }}
+                initial={{
+                    rotate: 360,
+                    y: '-80px',
+                    x:'50px'
+                }}
+                transition={{
+                    duration: 1
+                }}
+                className={`w-[1500px]   z-10  `}>
+                <img src="https://i.ibb.co/ZcbsDGF/blob-haikei.png" className='w-full' alt="" />
+
+            </motion.div>
         </section>
     );
 };

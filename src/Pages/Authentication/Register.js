@@ -19,11 +19,10 @@ const Register = ({setAnimation,animation}) => {
         e.preventDefault()
         const form = e.target;
         const name = form.name.value;
-        const photoURL = form.photourl.value;
         const email = form.email.value;
         const password = form.password.value;
 
-        console.log(name, photoURL, email, password);
+        console.log(name,  email, password);
        
         if (password.length < 6) {
             setError('Please should be at least 6 characters.');
@@ -35,7 +34,7 @@ const Register = ({setAnimation,animation}) => {
             .then(result => {
                 const user = result.user;
                 form.reset()
-                handleUserProfile(name, photoURL)
+                handleUserProfile(name)
                 setTimeout(() => {
                     navigate(frome, { replace: true })
 
@@ -74,10 +73,7 @@ const Register = ({setAnimation,animation}) => {
                         <label htmlFor="name" className="block text-gray-100 font-semibold">Full Name</label>
                         <input type="text" name="name" id="name" placeholder="Full name" className="w-full px-4 py-3 rounded-md border-gray-700 text-white text-gray-800 focus:border-violet-9200" />
                     </div>
-                    <div className="space-y-1 text-sm">
-                        <label htmlFor="photourl" className="block text-gray-100 font-semibold">Photo URL</label>
-                        <input type="text" name="photourl" id="photourl" placeholder="Photourl" className="w-full px-4 py-3 rounded-md border-gray-700 text-white text-gray-100 focus:border-violet-400" />
-                    </div>
+                  
                     <div className="space-y-1 text-sm">
                         <label htmlFor="email" className="block text-gray-100 font-semibold">Email</label>
                         <input type="text" name="email" id="email" placeholder="Email" className="w-full px-4 py-3 rounded-md border-gray-700 text-white text-gray-100 focus:border-violet-400" />

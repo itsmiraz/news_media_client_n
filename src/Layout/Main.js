@@ -4,11 +4,23 @@ import { Link, Outlet, useLoaderData } from 'react-router-dom';
 import Footer from '../Components/Footer/Footer';
 import Header from '../Components/Header/Header';
 import { NewsCatagoryContext } from '../Context/NewssContext';
+import { AuthContext } from '../Context/UserContext';
 
 const Main = () => {
     const catagories = useLoaderData()
     const { handleCatagoryId } = useContext(NewsCatagoryContext)
     const [collapse, setCollapse] = useState(false)
+    const { user, logOut, } = useContext(AuthContext)
+    const handlelogOut = () => {
+        logOut()
+            .then(() => {
+                console.log('Log Outed');
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     return (
         <div >
             <Header></Header>
@@ -35,7 +47,7 @@ const Main = () => {
                                 </Link>
                             </li>
 
-                            <Link to='/news'  onClick={() => handleCatagoryId('08')} className="flex items-center p-2 space-x-3 ">
+                            <Link to='/news' onClick={() => handleCatagoryId('08')} className="flex items-center p-2 space-x-3 ">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
                                 </svg>
@@ -47,7 +59,7 @@ const Main = () => {
 
                                 <div onClick={() => setCollapse(!collapse)} className="hover:cursor-pointer ease-in duration-500 rounded-box">
                                     <div className=" flex items-center p-2 space-x-3 rounded-md">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class={`w-6 h-6 transition-all ${collapse ? 'rotate-360':'rotate-180'}`}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class={`w-6 h-6 transition-all ${collapse ? 'rotate-360' : 'rotate-180'}`}>
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                         </svg>
 
@@ -91,15 +103,22 @@ const Main = () => {
                                     <span>Settings</span>
                                 </a>
                             </li>
-                            <li>
-                                <a rel="noopener noreferrer" href="/" className="flex items-center p-2 space-x-3 rounded-md">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-5 h-5 fill-current dark:text-gray-400">
-                                        <path d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z"></path>
-                                        <rect width="32" height="64" x="256" y="232"></rect>
-                                    </svg>
-                                    <span>Logout</span>
-                                </a>
-                            </li>
+                            {
+                                user?.uid &&
+                                <>
+
+                                    <li>
+                                        <button onClick={handlelogOut} className="flex items-center p-2 space-x-3 rounded-md">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                                            </svg>
+
+                                            <span>Logout</span>
+                                        </button>
+                                    </li>
+
+                                </>
+                            }
                         </ul>
                     </div>
                 </div>
