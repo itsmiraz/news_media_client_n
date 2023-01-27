@@ -5,12 +5,16 @@ import Footer from '../Components/Footer/Footer';
 import Header from '../Components/Header/Header';
 import { NewsCatagoryContext } from '../Context/NewssContext';
 import { AuthContext } from '../Context/UserContext';
+import useReporter from '../Hooks/UseReporter/useReporter';
 
 const Main = () => {
     const catagories = useLoaderData()
-    const { handleCatagoryId } = useContext(NewsCatagoryContext)
+
+    const { setCatagoryId, setAnimation,allnews, refetch } = useContext(NewsCatagoryContext)
     const [collapse, setCollapse] = useState(false)
-    const { user, logOut, } = useContext(AuthContext)
+    const { user, logOut, userfromDB, isLoading } = useContext(AuthContext)
+    const [isReporter] = useReporter(user?.email)
+
     const handlelogOut = () => {
         logOut()
             .then(() => {
@@ -21,20 +25,42 @@ const Main = () => {
             })
     }
 
+    const handleClick = id => {
+        setCatagoryId(id)
+        setAnimation(true)
+        refetch()
+    }
+   
     return (
         <div >
             <Header></Header>
             <div className='grid z-40 relative grid-cols-6'>
-                <div className="h-screen select-none sticky top-0 z-10 col-span-1 p-3 space-y-2 w-60 backdrop-blur-sm bg-white/10 rounded-lg my-3   dark:text-gray-100">
-                    <div className="flex items-center p-2 space-x-4">
-                        <img src="https://source.unsplash.com/100x100/?portrait" alt="" className="w-12 h-12 rounded-full dark:bg-gray-500" />
-                        <div>
-                            <h2 className="text-lg font-semibold">Leroy Jenkins</h2>
-                            <span className="flex items-center space-x-1">
-                                {/* <a rel="noopener noreferrer" href="/" className="text-xs hover:underline dark:text-gray-400">View profile</a> */}
-                            </span>
-                        </div>
-                    </div>
+                <div className="h-screen select-none sticky top-0 z-10 col-span-1 p-3 space-y-2 w-60 backdrop-blur-sm bg-white/10 rounded-lg dark:text-gray-100">
+                    {
+                        user?.uid &&
+                        <>
+                            <div className="flex items-center p-2 space-x-4">
+                                {
+                                    isLoading ?
+                                        <>
+                                            <div className="flex-shrink-0 w-12 h-12 animate-pulse rounded-full dark:bg-gray-700"></div>
+                                        </>
+                                        :
+                                        <div className=' h-12  overflow-hidden rounded-full'>
+
+                                            <img src={`${userfromDB[0].img ? `${userfromDB[0].img}` : 'https://t3.ftcdn.net/jpg/03/39/45/96/360_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg'}`} alt="" className="w-12  rounded-full dark:bg-gray-500" />
+                                        </div>
+                                }
+
+                                <div>
+                                    <h2 className="text-lg font-semibold">{user?.displayName}</h2>
+                                    <span className="flex items-center space-x-1">
+                                        <Link to='/userprofile' className="text-xs hover:underline dark:text-gray-400">View profile</Link>
+                                    </span>
+                                </div>
+                            </div>
+                        </>
+                    }
                     <div className="divide-y divide-gray-700">
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
                             <li className="bg-base-100 dark:text-gray-50">
@@ -47,18 +73,34 @@ const Main = () => {
                                 </Link>
                             </li>
 
-                            <Link to='/news' onClick={() => handleCatagoryId('08')} className="flex items-center p-2 space-x-3 ">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
-                                </svg>
+                            {
+                                isReporter &&
+                                <li>
+                                    <Link onClick={()=>handleClick('08')} to='/reporterdashboard' className="flex items-center p-2 space-x-3 ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5" />
+                                        </svg>
 
-                                <span>News</span>
-                            </Link>
+
+                                        <span>DashBoard</span>
+                                    </Link>
+                                </li>
+
+                            }
+                            <li>
+                                <Link to='/news' onClick={() => handleClick('08')} className="flex items-center p-2 space-x-3 ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                                    </svg>
+
+                                    <span>News</span>
+                                </Link>
+                            </li>
 
                             <li>
 
-                                <div onClick={() => setCollapse(!collapse)} className="hover:cursor-pointer ease-in duration-500 rounded-box">
-                                    <div className=" flex items-center p-2 space-x-3 rounded-md">
+                                <div className="hover:cursor-pointer ease-in duration-500 rounded-box">
+                                    <div onClick={() => setCollapse(!collapse)} className=" flex items-center p-2 space-x-3 rounded-md">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class={`w-6 h-6 transition-all ${collapse ? 'rotate-360' : 'rotate-180'}`}>
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                         </svg>
@@ -66,9 +108,9 @@ const Main = () => {
                                         <p>Catagory</p>
 
                                     </div>
-                                    <div className={`${collapse ? 'block' : 'hidden'} ease-in-out p-3 duration-500`}>
+                                    <div className={`${collapse ? 'block ' : 'hidden'} overflow-hidden ease-in-out duration-200 transition-all px-3 `}>
                                         {
-                                            catagories.map(catagory => <Link to='/news' onClick={() => handleCatagoryId(catagory.id)} key={catagory._id} className='text-normal block my-2'>{catagory.name}</Link>)
+                                            catagories.map(catagory => <Link to='/news' onClick={() => handleClick(catagory.id)} key={catagory._id} className='text-normal block my-2'>{catagory.name}</Link>)
                                         }
 
                                     </div>

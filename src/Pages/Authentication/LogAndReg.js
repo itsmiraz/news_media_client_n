@@ -32,6 +32,9 @@ const LogAndReg = () => {
                 transition={{
                     duration: 0.5
                 }}
+                initial={{
+                    opacity:0,
+                }}
                 animate={{
                     scale: animation ? 0 : 1,
                     opacity: animation ? 0 : 1
@@ -78,13 +81,13 @@ const LogAndReg = () => {
             </motion.div>
             <motion.div
                 animate={{
-                    x: animation ? '50px' : '-400px',
-                    rotate: animation ? 360 : 180
+                    x: animation ? '250px' : '-400px',
+                    rotate: animation ? 60 : 180
                 }}
                 initial={{
-                    rotate: 360,
-                    y: '-80px',
-                    x:'50px'
+                    rotate:  60,
+                    y: '-100px',
+                    x:'250px'
                 }}
                 transition={{
                     duration: 1

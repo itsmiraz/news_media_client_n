@@ -23,14 +23,8 @@ const Login = ({setAnimation,animation,change}) => {
         signIn(email, password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
                 form.reset()
-                toast.success('Logined SuccessFully')
-
-                setTimeout(() => {
-                    navigate(from, { replace: true })
-
-                }, 300);
+                saveUser(user?.email,user?.displayName)
             })
             .catch(error => {
                 if (error.message === 'Firebase: Error (auth/wrong-password).') {
@@ -49,13 +43,9 @@ const Login = ({setAnimation,animation,change}) => {
         googleSginIn()
             .then(result => {
                 const user = result.user;
-                toast.success('Logined SuccessFully')
 
-                setTimeout(() => {
-                    navigate(from, { replace: true })
-
-                }, 500);
-                console.log(user);
+                saveUser(user?.email, user?.displayName)     
+               
             })
             .catch(error => {
                 console.log('error', error);
@@ -80,7 +70,30 @@ const Login = ({setAnimation,animation,change}) => {
             })
     }
 
-  
+    const saveUser = (email, name, ) => {
+        const user = {
+            email,
+            name,
+        }
+        fetch(`https://new-media-server.vercel.app/user/${email}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                setTimeout(() => {
+                    navigate(from, { replace: true })
+                    
+                    toast.success(' Login Success SuccessFully')
+                }, 300);
+            })
+
+
+    }
 
     
 

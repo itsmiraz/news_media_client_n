@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/UserContext';
+import useReporter from '../../Hooks/UseReporter/useReporter';
 
 const Header = () => {
     const [open, setOpen] = useState(false)
 
     const { user } = useContext(AuthContext)
+    const [isReporter] = useReporter(user?.email)
 
     return (
         <div className=' my-2 text-white  items-center md:px-10 px-4 py-3 flex justify-between w-full'>
@@ -24,20 +26,30 @@ const Header = () => {
                     <li className='font-semibold mr-4'>
                         <Link>About</Link>
                     </li>
+                    {
+                        user?.uid &&
+                        <>
+                            {
+                                !isReporter &&
+                                <li className='font-semibold mr-4'>
+                                    <Link to='/becomeaReporter'>
+                                        Become a Reporter ?
+                                    </Link>
+                                </li>
+                            }
+                        </>
+                    }
                     <li>
 
                         {
-                            user?.uid ?
-                                <>
-                                    <img className='w-10 rounded-full' src="https://t3.ftcdn.net/jpg/03/39/45/96/360_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg" alt="" />
-                                </>
-                                :
-                                <>
-                                    <Link to='/auth'>
-                                        <button className="border rounded-md border-purple-500 px-4 py-1 md:my-0 my-1 text-white  mr-4 ">Sign In </button>
+                            !user?.uid &&
 
-                                    </Link>
-                                </>
+                            <>
+                                <Link to='/auth'>
+                                    <button className="border rounded-md border-purple-500 px-4 py-1 md:my-0 my-1 text-white  mr-4 ">Sign In </button>
+
+                                </Link>
+                            </>
                         }
                     </li>
 

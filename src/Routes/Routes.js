@@ -3,39 +3,49 @@ import Authentication from "../Layout/Authentication";
 import Main from "../Layout/Main";
 import LogAndReg from "../Pages/Authentication/LogAndReg";
 import Login from "../Pages/Authentication/Login";
+import BecomeAReporter from "../Pages/BecomeAReporter/BecomeAReporter";
+import Error from "../Pages/Error/Error";
 import Home from "../Pages/Home/Home/Home";
 import News from "../Pages/News/News";
 import NewsDetails from "../Pages/News/NewsDetails";
+import ReporterDashboard from "../Pages/ReporterDashBoard/ReporterDashboard";
+import UserProfile from "../Pages/UserProfile/UserProfile";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        loader:()=>fetch('http://localhost:5000/catagory'),
+        loader: () => fetch('https://new-media-server.vercel.app/catagory'),
         element: <Main></Main>,
         children: [
             {
                 path: '/',
-                element:<Home></Home>
+                element: <Home></Home>
             },
             {
                 path: '/news',
-                // loader:()=>fetch(`http://localhost:5000/catagory/08`),
                 element: <News></News>,
-                
+
             },
             {
-                path: '/catagoryNews/:id',
-                loader:({params})=>fetch(`http://localhost:5000/catagory/${params.id}`),
-                element:<News></News>
+                path: '/userprofile',
+                element: <UserProfile></UserProfile>
+            },
+            {
+                path: '/becomeaReporter',
+                element: <BecomeAReporter></BecomeAReporter>
+            },
+            {
+                path: '/reporterdashboard',
+                element:<ReporterDashboard></ReporterDashboard>
             },
             {
                 path: '/news/:id',
-                loader:({params})=>fetch(`http://localhost:5000/news/${params.id}`),
-                element:<NewsDetails></NewsDetails>
+                loader: ({ params }) => fetch(`https://new-media-server.vercel.app/news/${params.id}`),
+                element: <NewsDetails></NewsDetails>
             },
             {
                 path: '/authentication',
-                element:<Login></Login>
+                element: <Login></Login>
             }
         ]
 
@@ -46,8 +56,13 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "/auth",
-                element:<LogAndReg></LogAndReg>
+                element: <LogAndReg></LogAndReg>
             }
         ]
+    },
+    {
+        path: '*',
+        element: <Error></Error>
     }
+
 ])

@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword, getAuth, GithubAuthProvider, GoogleAuth
 import { useState } from 'react';
 import { useEffect } from 'react';
 import app from '../Firebase/firebase.init.config';
+import { useQuery } from '@tanstack/react-query';
 
 export const AuthContext = createContext()
 
@@ -61,15 +62,24 @@ const UserContext = ({ children }) => {
         return signOut(auth)
     }
 
-    
+    const { data: userfromDB,isLoading,refetch } = useQuery({
+        queryKey: ['userData',user?.email],
+        queryFn: async () => {
+            const res = await fetch(`https://new-media-server.vercel.app/userdetail?email=${user?.email}`)
+            const data = await res.json()
+            return data
+        }
+    })
 
 
     const authInfo = {
         user,
         signUp,
-
+        isLoading,
+        userfromDB,
         githubSingIn,
         loading,
+        refetch,
         setuserProfile,
         logOut,
         googleSginIn,

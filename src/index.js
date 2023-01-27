@@ -13,15 +13,15 @@ const queryClient = new QueryClient()
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <UserContext>
-        <QueryClientProvider client={queryClient}>
-      <NewssContext>
+    <QueryClientProvider client={queryClient}>
+      <UserContext>
+        <NewssContext>
           <ApiProvider api={apiSlice}>
             <App />
           </ApiProvider>
-    </NewssContext>
-        </QueryClientProvider>      
-    </UserContext>
+        </NewssContext>
+      </UserContext>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 
