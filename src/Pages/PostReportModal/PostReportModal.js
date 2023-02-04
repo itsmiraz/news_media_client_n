@@ -122,7 +122,6 @@ const PostReportModal = ({ modalOpen, setModalOpen }) => {
 
 
     }
-    console.log(newDate);
     return (
         <div>
 

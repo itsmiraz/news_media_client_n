@@ -4,7 +4,7 @@ import Stats from './Stats';
 const Home = () => {
 	return (
 		<div className='pl-8 pr-5 py-3 z-20'>
-			<div className="bg-gradient-to-r from-violet-600 to-pink-500 z-30 relative rounded-2xl shadow-2xl w-full text-gray-100">
+			<div className="bg-gradient-to-r from-violet-600 to-pink-500 z-20 relative rounded-2xl shadow-2xl w-full text-gray-100">
 				<div className="container flex flex-col justify-center p-6 mx-auto py-8 lg:flex-row lg:justify-between">
 					<div className="flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left">
 						<h1 className="text-3xl font-bold md:text-4xl ">

@@ -11,12 +11,12 @@ const Header = () => {
     const [isReporter] = useReporter(user?.email)
 
     return (
-        <div className=' my-2 text-white  items-center md:px-10 px-4 py-3 flex justify-between w-full'>
+        <div className='z-50 my-2 text-white  items-center md:px-10 px-4 py-3 flex justify-between w-full'>
 
-            <h1 className='text-3xl z-10 font-bold'>News Media </h1>
+            <h1 className='text-3xl z-50 font-bold relative'>News Media </h1>
 
-            <div>
-                <ul className={`md:flex items-center font-semibold right-0 z-10 md:bg-base-100 bg-slate-800 w-full text-white text-center justify-center md:static duration-300 ease-linear absolute ${open ? 'top-12' : 'top-[-150px]'}`}>
+            <div className='z-50'>
+                <ul className={`md:flex items-center font-semibold right-0  md:bg-base-100 bg-slate-800 w-full text-white text-end pr-4 md:py-0 py-2 pt-14 justify-center md:static duration-300 ease-linear absolute ${open ? 'top-0' : 'top-[-400px]'}`}>
                     <li className='font-semibold mr-4'>
                         <Link to='/'>Home</Link>
                     </li>
@@ -46,7 +46,7 @@ const Header = () => {
 
                             <>
                                 <Link to='/auth'>
-                                    <button className="border rounded-md border-purple-500 px-4 py-1 md:my-0 my-1 text-white  mr-4 ">Sign In </button>
+                                    <button className="border  border-purple-500 px-4 py-1 md:my-0 my-1 text-white  mr-4 ">Sign In </button>
 
                                 </Link>
                             </>
@@ -55,7 +55,7 @@ const Header = () => {
 
 
                 </ul>
-                <div onClick={() => setOpen(!open)} className="h-6  bg-slate-800 text-white w-6 md:hidden" >
+                <div onClick={() => setOpen(!open)} className="h-6  relative z-50 text-white w-6 md:hidden" >
                     {open ? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>

@@ -9,7 +9,7 @@ const News = () => {
 
 
     return (
-        <section>
+        <section className='px-2'>
             <div>
 
                 {
@@ -57,7 +57,7 @@ const News = () => {
                                     </div>
                                     :
                                     <div>
-                                        <h1 className='text-start px-2 text-white text-4xl font-semibold'>{allnews?.length} Results Found</h1>
+                                        <h1 className='text-start px-2 text-white text-xl md:text-4xl font-semibold'>{allnews?.length} Results Found</h1>
 
                                         {
                                             allnews?.map(signleNews => <NewsCard
