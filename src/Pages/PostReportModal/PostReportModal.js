@@ -152,14 +152,14 @@ const PostReportModal = ({ modalOpen, setModalOpen }) => {
                         }
                         <div className="form-control w-full ">
                            
-                            <input required name='title' type="text" placeholder="Title" className=" border-b p-2 my-2 border-gray-400 bg-transparent w-full " />
+                            <input required name='title' type="text" placeholder="Title" className="focus:outline-none border-b p-2 my-2 border-gray-400 bg-transparent w-full " />
 
                         </div>
                        
 
                         <div className="form-control w-full ">
                           
-                            <textarea required type="text" name='details' placeholder="Description" className="bg-transparent border-b border-gray-400 my-4 input-bordered h-24 p-2 w-full " />
+                            <textarea required type="text" name='details' placeholder="Description" className="bg-transparent focus:outline-none border-b border-gray-400 my-4 input-bordered h-24 p-2 w-full " />
 
                         </div>
                         {

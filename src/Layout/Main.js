@@ -10,7 +10,7 @@ import useReporter from '../Hooks/UseReporter/useReporter';
 const Main = () => {
     const catagories = useLoaderData()
 
-    const { setCatagoryId, setAnimation,allnews, refetch } = useContext(NewsCatagoryContext)
+    const { setCatagoryId, setAnimation, refetch } = useContext(NewsCatagoryContext)
     const [collapse, setCollapse] = useState(false)
     const { user, logOut, userfromDB, isLoading } = useContext(AuthContext)
     const [isReporter] = useReporter(user?.email)
@@ -27,6 +27,7 @@ const Main = () => {
 
     const handleClick = id => {
         setCatagoryId(id)
+        console.log(id);
         setAnimation(true)
         refetch()
     }

@@ -26,8 +26,13 @@ const NewssContext = ({ children }) => {
    
     useEffect(() => {
        
-        const newsData = news?.filter(cataNews => cataNews.category_id === catagoryId)
-        setAllNews(newsData)
+        if (catagoryId === "08") {
+           setAllNews(news)
+        }
+        else {
+            const newsData = news?.filter(cataNews => cataNews.category_id === catagoryId)
+            setAllNews(newsData)
+        }
 
 
 
