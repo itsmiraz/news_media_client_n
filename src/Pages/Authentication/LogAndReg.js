@@ -15,7 +15,7 @@ const LogAndReg = () => {
     }
 
     return (
-        <section className='relative overflow-hidden h-screen'>
+        <section className='relative overflow-hidden h-full lg:h-screen'>
             <motion.div
                 transition={{
                     duration: 0.5
@@ -24,7 +24,7 @@ const LogAndReg = () => {
                     scale: animation ? 1 : 0,
                     opacity: animation ? 1 : 0
                 }}
-                className={`absolute   left-40 top-10 ${animation ? 'z-50' : 'z-0 '}`}>
+                className={`lg:absolute   left:0 lg:left-40 top-0 lg:top-10 ${animation ? 'z-50' : 'z-0 '}`}>
                 <Login change={change} animation={animation} setAnimation={setAnimation}></Login>
 
             </motion.div>
@@ -39,7 +39,7 @@ const LogAndReg = () => {
                     scale: animation ? 0 : 1,
                     opacity: animation ? 0 : 1
                 }}
-                className={`absolute  right-40 top-10 ${animation ? 'z-0 ' : 'z-50 '}`}>
+                className={`absolute   left-0 lg:right-40 top-0  lg:top-10 ${animation ? 'z-0 ' : 'z-50 '}`}>
 
                 <Register change={change} animation={animation} setAnimation={setAnimation}></Register>
             </motion.div>
@@ -54,7 +54,7 @@ const LogAndReg = () => {
                 // transition={{
                 //     duration:1
                 // }}
-                className='absolute z-40 top-40 left-32'
+                className='lg:absolute hidden  z-40 top-40 left-32'
             >
 
                 <h1 className='text-5xl font-bold text-white'>Please Register </h1>
@@ -70,7 +70,7 @@ const LogAndReg = () => {
                     opacity: animation ? 1 : 0
                 }}
                 
-                className='absolute z-40 top-40 right-60'
+                className=' lg:absolute hidden z-40 top-40 right-60'
             >
 
                 <h1 className='text-5xl font-bold text-white'>Please Login </h1>
@@ -92,7 +92,7 @@ const LogAndReg = () => {
                 transition={{
                     duration: 1
                 }}
-                className={`w-[1500px]   z-10  `}>
+                className={`w-[1500px] lg:block hidden  z-10  `}>
                 <img src="https://i.ibb.co/ZcbsDGF/blob-haikei.png" className='w-full' alt="" />
 
             </motion.div>

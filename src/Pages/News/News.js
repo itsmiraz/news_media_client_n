@@ -1,5 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
+import { ScrollRestoration } from 'react-router-dom';
 import NewsCard from '../../Components/NewsCard/NewsCard';
 import { NewsCatagoryContext } from '../../Context/NewssContext';
 
@@ -72,6 +73,7 @@ const News = () => {
                 }
 
             </div>
+            <ScrollRestoration></ScrollRestoration>
         </section>
     );
 };

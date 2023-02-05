@@ -12,7 +12,6 @@ const NewssContext = ({ children }) => {
     const [animation, setAnimation] = useState(false)
     const [catagoryId, setCatagoryId] = useState('08')
    
-   
     const { data: news, isLoading, refetch } = useQuery({
         queryKey: ['news','catagoryId'],
         queryFn: async () => {
@@ -38,7 +37,12 @@ const NewssContext = ({ children }) => {
 
    },[catagoryId,news])
 
-
+//    value.first_name.toLowerCase().includes(searchTerm.toLowerCase())
+    const seachClick = (search) => {
+        const filteredData = news?.filter(singleNews=>singleNews.title.toLowerCase().includes(search.toLowerCase()))
+        setAllNews(filteredData)
+        return
+    } 
     
 
 console.log(catagoryId);
@@ -46,6 +50,7 @@ console.log(catagoryId);
         news,
         setCatagoryId,
         setAnimation,
+        seachClick,
         allnews,
         isLoading,
         refetch,
