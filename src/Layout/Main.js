@@ -17,7 +17,7 @@ const Main = () => {
     const [weather, setweather] = useState({})
     const apiKey = process.env.REACT_APP_OPENWHETHER_API
     const { setCatagoryId, setAnimation, refetch, seachClick } = useContext(NewsCatagoryContext)
-    const [searchTerm,setsearchTerm] = useState('')
+    const [searchTerm, setsearchTerm] = useState('')
     const [collapse, setCollapse] = useState(false)
     const { user, logOut, userfromDB, isLoading } = useContext(AuthContext)
     const [isReporter] = useReporter(user?.email)
@@ -40,7 +40,7 @@ const Main = () => {
             fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}`)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
+                    console.log('rerenderd');
                     setweather(data)
                 })
         )
@@ -114,8 +114,8 @@ const Main = () => {
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                                         </svg>
-                                        <input type="text"  onChange={(e)=>setsearchTerm(e.target.value)} className='w-full bg-transparent focus:outline-none ' />
-                                        <Link to='/news' onClick={()=>seachClick(searchTerm)}>Search</Link>
+                                        <input type="text" onChange={(e) => setsearchTerm(e.target.value)} className='w-full bg-transparent focus:outline-none ' />
+                                        <Link to='/news' onClick={() => seachClick(searchTerm)}>Search</Link>
                                     </p>
                                 </li>
 
@@ -196,17 +196,26 @@ const Main = () => {
                 <div className="p-3 col-span-1 z-40 absolute lg:relative left-[-1000px] lg:left-0">
 
                     <div>
-                        <div className="flex flex-col shadow-2xl items-center p-4 rounded-md  sm:px-12 bg-gradient-to-b from-slate-800 to-indigo-500 text-gray-100">
-                            <div className="text-center">
-                                <h2 className=" font-semibold">{weather?.name}</h2>
-                                <p className="text-sm text-gray-100">Date: {formatDate}</p>
-                            </div>
+                        <div className="flex flex-col shadow-2xl items-center p-2 rounded-md  sm:px-12 bg-gradient-to-b from-slate-800 to-indigo-500 text-gray-100">
                             {
-                                weather?.weather && <p className=" text-3xl font-bold text-gray-100">{weather.weather[0]?.main}</p>
+                                weather.weather ?
+                                    <>
+                                        <div className="text-center">
+                                            <h2 className=" font-semibold">{weather?.name}</h2>
+                                            <p className="text-sm text-gray-100">Date: {formatDate}</p>
+                                        </div>
+                                        {
+                                            weather?.weather && <p className=" text-3xl font-bold text-gray-100">{weather.weather[0]?.main}</p>
+                                        }
+                                        <div className="mb-2 text-3xl font-semibold">{minTemp}°
+                                            <span className="mx-1 font-normal">/</span>{maxTemp}°
+                                        </div>
+                                    </>
+                                    :
+                                    <>
+                                        <p className='text-xl w-full font-semibold'>Please Allow to Location to see Weather Info</p>
+                                    </>
                             }
-                            <div className="mb-2 text-3xl font-semibold">{minTemp}°
-                                <span className="mx-1 font-normal">/</span>{maxTemp}°
-                            </div>
 
                         </div>
                         <div className='p-5 rounded-lg mt-8 bg-gradient-to-b from-slate-800 to-blue-500'>

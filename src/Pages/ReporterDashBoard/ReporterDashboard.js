@@ -1,6 +1,7 @@
 import React from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { NewsCatagoryContext } from '../../Context/NewssContext';
 import { AuthContext } from '../../Context/UserContext';
 import PostReportModal from '../PostReportModal/PostReportModal';
@@ -8,14 +9,27 @@ import PostReportModal from '../PostReportModal/PostReportModal';
 const ReporterDashboard = () => {
     const [modalOpen, setModalOpen] = useState('')
     const { user } = useContext(AuthContext)
-    const { news } = useContext(NewsCatagoryContext)
+    const { news,refetch } = useContext(NewsCatagoryContext)
     console.log(news);
+    const handleDelete = id => {
 
+        fetch(`http://localhost:5000/deletenews/${id}`, {
+            method:'DELETE'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                toast.success('Deleted')
+                refetch()
+        })
+
+
+}
 
     const reporternews = news?.filter(singlenews => singlenews?.author?.email === user.email)
     console.log(reporternews)
     return (
-        <section className='grid grid-cols-2 gap-5'>
+        <section className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
             <div>
                 <div className='backdrop-blur-md rounded-md p-4 bg-black/50'>
                     <h1 className='text-xl text-white font-semibold'>Notifications</h1>
@@ -41,8 +55,8 @@ const ReporterDashboard = () => {
                                 </svg>
                                 </label>
                                 <ul tabIndex={0} className="dropdown-content  menu p-2 shadow bg-base-100 rounded-box w-52">
-                                    <li><a className='text-white' href='/'>Edit</a></li>
-                                    <li><a className='text-white' href='/'>Delete</a></li>
+                                    <li><p className='text-white' >Edit</p></li>
+                                    <li><p className='text-white' onClick={()=>handleDelete(singleNews._id)}>Delete</p></li>
                                 </ul>
                             </div>
                         </div>)
@@ -52,7 +66,8 @@ const ReporterDashboard = () => {
             {
                 modalOpen &&
                 <PostReportModal
-                    modalOpen={modalOpen}
+                        modalOpen={modalOpen}
+                        refetch={refetch}
                     setModalOpen={setModalOpen}
                 ></PostReportModal>
             }

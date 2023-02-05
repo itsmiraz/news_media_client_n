@@ -1,4 +1,4 @@
-import { animate, motion } from 'framer-motion';
+import {  motion } from 'framer-motion';
 import React from 'react';
 import { useState } from 'react';
 import Login from './Login';
@@ -39,7 +39,7 @@ const LogAndReg = () => {
                     scale: animation ? 0 : 1,
                     opacity: animation ? 0 : 1
                 }}
-                className={`absolute   left-0 lg:right-40 top-0  lg:top-10 ${animation ? 'z-0 ' : 'z-50 '}`}>
+                className={`absolute  lg:right-40 top-0  lg:top-10 ${animation ? 'z-0 ' : 'z-50 '}`}>
 
                 <Register change={change} animation={animation} setAnimation={setAnimation}></Register>
             </motion.div>
@@ -54,7 +54,7 @@ const LogAndReg = () => {
                 // transition={{
                 //     duration:1
                 // }}
-                className='lg:absolute hidden  z-40 top-40 left-32'
+                className='lg:block lg:absolute hidden  z-40 top-40 left-32'
             >
 
                 <h1 className='text-5xl font-bold text-white'>Please Register </h1>
@@ -70,7 +70,7 @@ const LogAndReg = () => {
                     opacity: animation ? 1 : 0
                 }}
                 
-                className=' lg:absolute hidden z-40 top-40 right-60'
+                className=' lg:block lg:absolute hidden z-40 top-40 right-60'
             >
 
                 <h1 className='text-5xl font-bold text-white'>Please Login </h1>

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
 import { AuthContext } from '../../Context/UserContext';
 
-const PostReportModal = ({ modalOpen, setModalOpen }) => {
+const PostReportModal = ({ modalOpen,refetch, setModalOpen }) => {
     const data = new Date()
     const newDate = format(data,'PP')
     const navigate = useNavigate()
@@ -114,6 +114,7 @@ const PostReportModal = ({ modalOpen, setModalOpen }) => {
                         console.log(data)
                         toast.success('Posted')
                         setModalOpen('')
+                        refetch()
                         navigate('/reporterdashboard')
                 })
                

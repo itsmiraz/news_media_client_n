@@ -3,11 +3,12 @@ import { useContext } from 'react';
 import { ScrollRestoration } from 'react-router-dom';
 import NewsCard from '../../Components/NewsCard/NewsCard';
 import { NewsCatagoryContext } from '../../Context/NewssContext';
+import { AuthContext } from '../../Context/UserContext';
 
 const News = () => {
 
-    const { isLoading, animation, allnews } = useContext(NewsCatagoryContext)
-
+    const { isLoading, animation, allnews ,refetch} = useContext(NewsCatagoryContext)
+const {user} = useContext(AuthContext)
 
     return (
         <section className='px-2'>
@@ -64,6 +65,8 @@ const News = () => {
                                             allnews?.map(signleNews => <NewsCard
                                                 key={signleNews._id}
                                                 signleNews={signleNews}
+                                                user={user}
+                                                refetch={refetch}
                                             ></NewsCard>)
                                         }
                                     </div>
