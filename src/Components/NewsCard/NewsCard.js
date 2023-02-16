@@ -107,27 +107,39 @@ const NewsCard = ({ signleNews, user, refetch }) => {
                 </div>
                 <div className='flex px-2 justify-between items-center'>
 
-                    <div className='flex items-center  gap-x-4'>
-                        <div className='flex items-center'>
+                    {
+                        user?.uid ?
+                            <>
+                        
+                                <div className='flex items-center  gap-x-4'>
+                                    <div className='flex items-center'>
 
-                            <p className='text-2xl'>{upVote?.length}</p>
+                                        <p className='text-2xl'>{upVote?.length}</p>
 
-                            <button disabled={ disLike} className='disabled:text-gray-800 disabled:cursor-not-allowed' onClick={() => handleLike(_id)} >
+                                        <button disabled={disLike} className='disabled:text-gray-800 disabled:cursor-not-allowed' onClick={() => handleLike(_id)} >
 
-                                <svg xmlns="http://www.w3.org/2000/svg" className={`w-10  h-10   ${like ? 'text-blue-800' : 'text-blue-100'}`} viewBox="0 0 24 24"><path fill="currentColor" d="M12.781 2.375c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10zM15 12h-1v8h-4v-8H6.081L12 4.601L17.919 12H15z" /></svg>
-                            </button>
+                                            <svg xmlns="http://www.w3.org/2000/svg" className={`w-10  h-10   ${like ? 'text-blue-800' : 'text-blue-100'}`} viewBox="0 0 24 24"><path fill="currentColor" d="M12.781 2.375c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10zM15 12h-1v8h-4v-8H6.081L12 4.601L17.919 12H15z" /></svg>
+                                        </button>
 
-                        </div>
+                                    </div>
 
-                        <div className='flex items-center'>
-                            <p className='text-2xl'>{downVote?.length}</p>
-                            <button disabled={ like} className='disabled:text-gray-800 disabled:cursor-not-allowed' onClick={() => handledilike(_id)}>
-                                <svg  xmlns="http://www.w3.org/2000/svg" className={`w-10   h-10 rotate-180 ${disLike ? 'text-blue-800' : 'text-blue-100'} `} viewBox="0 0 24 24"><path fill="currentColor" d="M12.781 2.375c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10zM15 12h-1v8h-4v-8H6.081L12 4.601L17.919 12H15z" /></svg>
-                            </button>
+                                    <div className='flex items-center'>
+                                        <p className='text-2xl'>{downVote?.length}</p>
+                                        <button disabled={like} className='disabled:text-gray-800 disabled:cursor-not-allowed' onClick={() => handledilike(_id)}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" className={`w-10   h-10 rotate-180 ${disLike ? 'text-blue-800' : 'text-blue-100'} `} viewBox="0 0 24 24"><path fill="currentColor" d="M12.781 2.375c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10zM15 12h-1v8h-4v-8H6.081L12 4.601L17.919 12H15z" /></svg>
+                                        </button>
 
 
-                        </div>
-                    </div>
+                                    </div>
+                                </div>
+                            
+                            </>
+ :
+ <>
+                                <p>Please <Link to='/auth' className='underline'>Login First</Link></p>
+                            </>
+                           
+                    }
                     <div className=''>
                         <Link to={`/news/${signleNews._id}`} className='flex px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500  relative text-white font-semibold items-center  space-x-3 rounded-md'>
                             {/* <div className='bg-gradient-to-r from-cyan-500 to-blue-500 rounded-md transition-all p-1 duration-300 w-8 hover:w-24'>
