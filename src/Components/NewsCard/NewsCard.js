@@ -26,7 +26,7 @@ const NewsCard = ({ signleNews, user, refetch }) => {
             userName: user?.displayName,
             userEmail: user?.email
         }
-        fetch(`http://localhost:5000/likepost/${id}`, {
+        fetch(`https://new-media-server.vercel.app/likepost/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -44,7 +44,7 @@ const NewsCard = ({ signleNews, user, refetch }) => {
             userName: user?.displayName,
             userEmail: user?.email
         }
-        fetch(`http://localhost:5000/dislikepost/${id}`, {
+        fetch(`https://new-media-server.vercel.app/dislikepost/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

@@ -9,9 +9,18 @@ import Header from '../Components/Header/Header';
 import { NewsCatagoryContext } from '../Context/NewssContext';
 import { AuthContext } from '../Context/UserContext';
 import useReporter from '../Hooks/UseReporter/useReporter';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper";
+import "swiper/css";
+import "swiper/css/pagination";
+
+// import styles bundle
+import 'swiper/css/bundle';
 
 
-
+import AwesomeSlider from 'react-awesome-slider';
+import withAutoplay from 'react-awesome-slider/dist/autoplay';
+import 'react-awesome-slider/dist/styles.css';
 const Main = () => {
     const catagories = useLoaderData()
     const [weather, setweather] = useState({})
@@ -24,11 +33,32 @@ const Main = () => {
     const [lat, setlat] = useState('')
     const [long, setlong] = useState('')
     const date = new Date()
-    const formatDate = format(date, 'MM-dd')
+    const formatDate = format(date, 'MM-dd-yy')
     const minTemp = Math.floor((weather?.main?.temp_min - 273.15))
     const maxTemp = Math.floor((weather?.main?.temp_max - 273.15))
-    console.log(minTemp, maxTemp)
+
+
+
+    const AutoplaySlider = withAutoplay(AwesomeSlider);
+
+    const slider = (
+        <AutoplaySlider
+            play={true}
+            className='rounded-lgs'
+            cancelOnInteraction={true} // should stop playing on user interaction
+            interval={2000}
+        >
+            <div data-src="https://media.istockphoto.com/id/1182477852/photo/breaking-news-world-news-with-map-backgorund.jpg?s=612x612&w=0&k=20&c=SQfmzF39HZJ_AqFGosVGKT9iGOdtS7ddhfj0EUl0Tkc=" />
+            <div data-src="https://t4.ftcdn.net/jpg/03/13/59/87/360_F_313598786_qfT2oTVItHD44pbBsMgjncPf8OuB0Osg.jpg" />
+            <div data-src="https://thumbs.dreamstime.com/b/marketing-advertising-cloud-word-19099279.jpg" />
+        </AutoplaySlider>
+    );
+
     useEffect(() => {
+
+
+
+
 
         navigator.geolocation.getCurrentPosition((position) => {
             setlat(position.coords.latitude)
@@ -79,118 +109,118 @@ const Main = () => {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
             </svg>
             </button>
-            <div className='grid z-30 relative grid-cols-8 '>
-               
+            <div className='grid z-30 relative gap-2 grid-cols-8 '>
+
                 {/* Side Bar */}
-               
-               
-                    <div className={`absolute col-span-0   md:col-span-2  lg:relative ease-in-out duration-500  lg:left-0  w-full z-50 ${show ? 'left-0' : 'left-[-1000px]'}`}>
-                        <div className='h-[700px] sticky top-0 z-10 select-none   p-3 space-y-2  backdrop-blur-md bg-black/10 md:bg-white/10 rounded-2xl text-gray-100'>
-                            {
-                                user?.uid &&
-                                <>
-                                    <div className="flex items-center p-2 space-x-4">
-                                        {
-                                            isLoading ?
-                                                <>
-                                                    <div className="flex-shrink-0 w-12 h-12 animate-pulse rounded-full bg-gray-700"></div>
-                                                </>
-                                                :
-                                                <div className=' h-12  overflow-hidden rounded-full'>
 
-                                                    <img src={`${userfromDB[0]?.img ? `${userfromDB[0].img}` : 'https://t3.ftcdn.net/jpg/03/39/45/96/360_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg'}`} alt="" className="w-12  rounded-full bg-gray-500" />
-                                                </div>
-                                        }
 
-                                        <div>
-                                            <h2 className="text-lg font-semibold">{user?.displayName}</h2>
-                                            <span className="flex items-center space-x-1">
-                                                <Link to='/userprofile' className="text-xs hover:underline text-gray-400">View profile</Link>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </>
-                            }
-                            <div className="divide-y divide-gray-700">
-                                <ul className="pt-2 pb-4 space-y-1 text-sm">
-                                    <li className="bg-base-100 text-gray-50">
-                                        <p className="flex items-center p-2 space-x-3 rounded-md">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                                            </svg>
-                                            <input type="text" onChange={(e) => setsearchTerm(e.target.value)} className='w-full bg-transparent focus:outline-none ' />
-                                            <Link to='/news' onClick={() => seachClick(searchTerm)}>Search</Link>
-                                        </p>
-                                    </li>
-
+                <div className={`absolute col-span-0   md:col-span-2  lg:relative ease-in-out duration-500  lg:left-0  w-full z-50 ${show ? 'left-0' : 'left-[-1000px]'}`}>
+                    <div className='h-[700px] sticky top-0 z-10 select-none   p-3 space-y-2  backdrop-blur-md bg-black/10 md:bg-white/10 rounded-2xl text-gray-100'>
+                        {
+                            user?.uid &&
+                            <>
+                                <div className="flex items-center p-2 space-x-4">
                                     {
-                                        isReporter &&
-                                        <li>
-                                            <Link onClick={() => handleClick('08')} to='/reporterdashboard' className="flex items-center p-2 space-x-3 ">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5" />
-                                                </svg>
+                                        isLoading ?
+                                            <>
+                                                <div className="flex-shrink-0 w-12 h-12 animate-pulse rounded-full bg-gray-700"></div>
+                                            </>
+                                            :
+                                            <div className=' h-12  overflow-hidden rounded-full'>
 
-
-                                                <span>DashBoard</span>
-                                            </Link>
-                                        </li>
-
+                                                <img src={`${userfromDB[0]?.img ? `${userfromDB[0].img}` : 'https://t3.ftcdn.net/jpg/03/39/45/96/360_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg'}`} alt="" className="w-12  rounded-full bg-gray-500" />
+                                            </div>
                                     }
+
+                                    <div>
+                                        <h2 className="text-lg font-semibold">{user?.displayName}</h2>
+                                        <span className="flex items-center space-x-1">
+                                            <Link to='/userprofile' className="text-xs hover:underline text-gray-400">View profile</Link>
+                                        </span>
+                                    </div>
+                                </div>
+                            </>
+                        }
+                        <div className="divide-y divide-gray-700">
+                            <ul className="pt-2 pb-4 space-y-1 text-sm">
+                                <li className="bg-base-100 text-gray-50">
+                                    <p className="flex items-center p-2 space-x-3 rounded-md">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                        </svg>
+                                        <input type="text" onChange={(e) => setsearchTerm(e.target.value)} className='w-full bg-transparent focus:outline-none ' />
+                                        <Link to='/news' onClick={() => seachClick(searchTerm)}>Search</Link>
+                                    </p>
+                                </li>
+
+                                {
+                                    isReporter &&
                                     <li>
-                                        <Link to='/news' onClick={() => handleClick('08')} className="flex items-center p-2 space-x-3 ">
+                                        <Link onClick={() => handleClick('08')} to='/reporterdashboard' className="flex items-center p-2 space-x-3 ">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5" />
                                             </svg>
 
-                                            <span>News</span>
+
+                                            <span>DashBoard</span>
                                         </Link>
                                     </li>
 
-                                    <li>
+                                }
+                                <li>
+                                    <Link to='/news' onClick={() => handleClick('08')} className="flex items-center p-2 space-x-3 ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                                        </svg>
 
-                                        <div className="hover:cursor-pointer ease-in duration-500 rounded-box">
-                                            <div onClick={() => setCollapse(!collapse)} className=" flex items-center p-2 space-x-3 rounded-md">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class={`w-6 h-6 transition-all ${collapse ? 'rotate-360' : 'rotate-180'}`}>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        <span>News</span>
+                                    </Link>
+                                </li>
+
+                                <li>
+
+                                    <div className="hover:cursor-pointer ease-in duration-500 rounded-box">
+                                        <div onClick={() => setCollapse(!collapse)} className=" flex items-center p-2 space-x-3 rounded-md">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class={`w-6 h-6 transition-all ${collapse ? 'rotate-360' : 'rotate-180'}`}>
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                            </svg>
+
+                                            <p>Catagory</p>
+
+                                        </div>
+                                        <div className={`${collapse ? 'block ' : 'hidden'} overflow-hidden ease-in-out duration-200 transition-all px-3 `}>
+                                            {
+                                                catagories.map(catagory => <Link to='/news' onClick={() => handleClick(catagory.id)} key={catagory._id} className='text-normal block my-2'>{catagory.name}</Link>)
+                                            }
+
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                            </ul>
+                            <ul className="pt-4 pb-2 space-y-1 text-sm">
+
+                                {
+                                    user?.uid &&
+                                    <>
+
+                                        <li>
+                                            <button onClick={handlelogOut} className="flex items-center p-2 space-x-3 rounded-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
                                                 </svg>
 
-                                                <p>Catagory</p>
+                                                <span>Logout</span>
+                                            </button>
+                                        </li>
 
-                                            </div>
-                                            <div className={`${collapse ? 'block ' : 'hidden'} overflow-hidden ease-in-out duration-200 transition-all px-3 `}>
-                                                {
-                                                    catagories.map(catagory => <Link to='/news' onClick={() => handleClick(catagory.id)} key={catagory._id} className='text-normal block my-2'>{catagory.name}</Link>)
-                                                }
-
-                                            </div>
-                                        </div>
-                                    </li>
-
-
-                                </ul>
-                                <ul className="pt-4 pb-2 space-y-1 text-sm">
-
-                                    {
-                                        user?.uid &&
-                                        <>
-
-                                            <li>
-                                                <button onClick={handlelogOut} className="flex items-center p-2 space-x-3 rounded-md">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-                                                    </svg>
-
-                                                    <span>Logout</span>
-                                                </button>
-                                            </li>
-
-                                        </>
-                                    }
-                                </ul>
-                            </div>
+                                    </>
+                                }
+                            </ul>
                         </div>
-                  
+                    </div>
+
 
 
 
@@ -198,21 +228,21 @@ const Main = () => {
 
                 {/* Outlet */}
 
-                <div className='col-span-12  md:col-span-5 z-40 relative'>
+                <div className='col-span-12  md:col-span-4 z-40 relative'>
                     <Outlet ></Outlet>
                 </div>
 
 
                 {/* Right Bar */}
-                <div className="p-1 col-span-1 z-40 absolute lg:relative left-[-1000px] lg:left-0">
+                <div className="p-1 col-span-2 z-40 absolute lg:sticky top-0 left-[-1000px] lg:left-0">
 
-                    <div>
-                        <div className="flex flex-col shadow-2xl items-center p-2 rounded-md  sm:px-12 bg-gradient-to-b from-slate-800 to-indigo-500 text-gray-100">
+                    <div className='sticky top-0'>
+                        <div className="flex flex-col shadow-2xl  items-center p-2 rounded-md  sm:px-4 bg-gradient-to-b from-blue-500 to-indigo-500 text-gray-100">
                             {
                                 weather.weather ?
                                     <>
                                         <div className="text-center">
-                                            <h2 className=" font-semibold">{weather?.name}</h2>
+                                            <h2 className="text-3xl font-semibold">{weather?.name}</h2>
                                             <p className="text-sm text-gray-100">Date: {formatDate}</p>
                                         </div>
                                         {
@@ -229,8 +259,16 @@ const Main = () => {
                             }
 
                         </div>
+                        <div className='my-4 rounded-md'>
 
+
+                            {
+                                slider
+                            }
+
+                        </div>
                     </div>
+
                 </div>
 
             </div>
