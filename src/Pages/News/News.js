@@ -7,8 +7,8 @@ import { AuthContext } from '../../Context/UserContext';
 
 const News = () => {
 
-    const { isLoading, animation, allnews ,refetch} = useContext(NewsCatagoryContext)
-const {user} = useContext(AuthContext)
+    const { isLoading, animation, allnews, refetch } = useContext(NewsCatagoryContext)
+    const { user } = useContext(AuthContext)
 
     return (
         <section className='px-2'>
@@ -59,7 +59,7 @@ const {user} = useContext(AuthContext)
                                     </div>
                                     :
                                     <div>
-                                        <h1 className='text-start px-2 text-white text-xl md:text-4xl font-semibold'>{allnews?.length} Results Found</h1>
+                                        <h1 className='text-start sticky top-0 z-40 bg-slate-900/40 backdrop-blur-lg py-2 rounded-b-md px-2 text-white text-xl md:text-4xl font-semibold'>{allnews?.length} Results Found</h1>
 
                                         {
                                             allnews?.map(signleNews => <NewsCard

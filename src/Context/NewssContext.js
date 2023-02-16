@@ -13,7 +13,7 @@ const NewssContext = ({ children }) => {
     const [catagoryId, setCatagoryId] = useState('08')
    
     const { data: news, isLoading, refetch } = useQuery({
-        queryKey: ['news','catagoryId'],
+        queryKey: ['news','catagoryId','upVote','newsDetails'],
         queryFn: async () => {
             const res = await fetch(`https://new-media-server.vercel.app/news`)
             const data = await res.json()
@@ -21,7 +21,7 @@ const NewssContext = ({ children }) => {
             return data
         }
     })
-//   https://new-media-server.vercel.app/catagory/${catagoryId}
+
    
     useEffect(() => {
        

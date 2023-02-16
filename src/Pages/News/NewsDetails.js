@@ -1,17 +1,23 @@
 import React from 'react';
-import { Link, ScrollRestoration, useLoaderData } from 'react-router-dom';
+import {  ScrollRestoration, useLoaderData } from 'react-router-dom';
 
 const NewsDetails = () => {
 
     const data = useLoaderData()
+
+    
     console.log(data);
     const {
         details,
         image_url,
         title,
         author,
-        published_date,
+       
     } = data
+
+
+
+
     return (
         <div>
             <div className='my-3 bg-gray-800  rounded-md shadow-lg'>
@@ -26,6 +32,7 @@ const NewsDetails = () => {
                     <div className='flex text-white my-2  space-x-4 items-center'>
                         <img className='w-10 rounded-full' src={author?.img ? `${author.img}` : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'} alt="" />
                         <p>{author.name ? `${author.name}` : 'Unknown'}</p>
+
                     </div>
                     <p className='text-gray-200 font-xl  my-2'>{details}</p>
                     <div className='flex  justify-between items-center'>
@@ -38,6 +45,7 @@ const NewsDetails = () => {
 
                             <span className='absolute left-6'>Details</span>
                         </Link> */}
+                       
                         <p className='text-sm text-white' >
                             Published Date : {author.published_date}
                         </p>
@@ -46,7 +54,7 @@ const NewsDetails = () => {
 
 
             </div>
-            <ScrollRestoration/>
+            <ScrollRestoration />
         </div>
     );
 };

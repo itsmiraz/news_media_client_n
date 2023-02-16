@@ -2,12 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { tr } from 'date-fns/locale';
 
-const NewsCard = ({ signleNews, user,refetch }) => {
+const NewsCard = ({ signleNews, user, refetch }) => {
 
     const [like, setLike] = useState(false)
-    const [disLink, setDislike] = useState(false)
+    const [disLike, setDislike] = useState(false)
 
     const {
         details,
@@ -41,6 +40,22 @@ const NewsCard = ({ signleNews, user,refetch }) => {
             })
     }
     const handledilike = (id) => {
+        const userData = {
+            userName: user?.displayName,
+            userEmail: user?.email
+        }
+        fetch(`http://localhost:5000/dislikepost/${id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                refetch()
+            })
     }
 
     useEffect(() => {
@@ -48,26 +63,33 @@ const NewsCard = ({ signleNews, user,refetch }) => {
 
 
         const likedpost = upVote.find(votes => votes.userEmail === user?.email)
-        console.log(likedpost)
+        console.log('likedpost', likedpost)
+        const dislikePost = downVote.find(votes => votes.userEmail === user?.email)
         if (likedpost) {
+
             setLike(true)
+            console.log('liked');
             return
         }
-        // if (user?.email === upVote.userEmail) {
+        else if (dislikePost) {
+            setDislike(true)
+            return
+        }
 
-        //     setLike(true)
-        //     console.log('liked');
-        //     return
-        // }
-        // else {
-        //     console.log('false');
-        //     return 
-        // }
+        else {
+            setLike(false)
+            setDislike(false)
+            console.log('false');
+            return
+        }
 
-    }, [user?.email, upVote])
+    }, [user?.email, downVote, upVote])
+
+
+    console.log(signleNews);
 
     return (
-        <div className='my-6 bg-gray-800   rounded-md shadow-lg'>
+        <div className='my-3 bg-gray-800   rounded-md shadow-lg'>
             <div className='relative rounded-md overflow-hidden' >
                 <img className='w-full transition-all hover:opacity-90 hover:scale-105  z-10' src={image_url} alt="" />
                 <div className='h-40 rounded-md w-full absolute bottom-0 z-20 bg-gradient-to-b from-transparent to-black'>
@@ -90,16 +112,18 @@ const NewsCard = ({ signleNews, user,refetch }) => {
 
                             <p className='text-2xl'>{upVote?.length}</p>
 
-                            <button onClick={() => handleLike(_id)} >
+                            <button disabled={ disLike} className='disabled:text-gray-800 disabled:cursor-not-allowed' onClick={() => handleLike(_id)} >
 
-                                <svg xmlns="http://www.w3.org/2000/svg" className={`w-10 hover:cursor-pointer h-10   ${like ? 'text-blue-800' : 'text-blue-100'}`} viewBox="0 0 24 24"><path fill="currentColor" d="M12.781 2.375c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10zM15 12h-1v8h-4v-8H6.081L12 4.601L17.919 12H15z" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" className={`w-10  h-10   ${like ? 'text-blue-800' : 'text-blue-100'}`} viewBox="0 0 24 24"><path fill="currentColor" d="M12.781 2.375c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10zM15 12h-1v8h-4v-8H6.081L12 4.601L17.919 12H15z" /></svg>
                             </button>
 
                         </div>
 
                         <div className='flex items-center'>
                             <p className='text-2xl'>{downVote?.length}</p>
-                            <svg onClick={() => handledilike(_id)} xmlns="http://www.w3.org/2000/svg" className={`w-10  hover:cursor-pointer h-10 rotate-180 ${disLink ? 'text-blue-800' : 'text-blue-100'} `} viewBox="0 0 24 24"><path fill="currentColor" d="M12.781 2.375c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10zM15 12h-1v8h-4v-8H6.081L12 4.601L17.919 12H15z" /></svg>
+                            <button disabled={ like} className='disabled:text-gray-800 disabled:cursor-not-allowed' onClick={() => handledilike(_id)}>
+                                <svg  xmlns="http://www.w3.org/2000/svg" className={`w-10   h-10 rotate-180 ${disLike ? 'text-blue-800' : 'text-blue-100'} `} viewBox="0 0 24 24"><path fill="currentColor" d="M12.781 2.375c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10zM15 12h-1v8h-4v-8H6.081L12 4.601L17.919 12H15z" /></svg>
+                            </button>
 
 
                         </div>
