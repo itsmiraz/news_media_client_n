@@ -92,7 +92,7 @@ const LogAndReg = () => {
                 transition={{
                     duration: 1
                 }}
-                className={`w-[1500px] lg:block hidden  z-10  `}>
+                className={`w-[1200px] lg:block hidden  z-10  `}>
                 <img src="https://i.ibb.co/ZcbsDGF/blob-haikei.png" className='w-full' alt="" />
 
             </motion.div>

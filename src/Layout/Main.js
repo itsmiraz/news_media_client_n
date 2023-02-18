@@ -114,8 +114,8 @@ const Main = () => {
                 {/* Side Bar */}
 
 
-                <div className={`absolute col-span-0   md:col-span-2  lg:relative ease-in-out duration-500  lg:left-0  w-full z-50 ${show ? 'left-0' : 'left-[-1000px]'}`}>
-                    <div className='h-[700px] sticky top-0 z-10 select-none   p-3 space-y-2  backdrop-blur-md bg-black/10 md:bg-white/10 rounded-2xl text-gray-100'>
+                <div className={`absolute col-span-0   md:col-span-2  lg:relative ease-in-out duration-500  lg:left-0 px-4  w-full z-50 ${show ? 'left-0' : 'left-[-1000px]'}`}>
+                    <div className='h-[550px] sticky top-0 z-10 select-none   p-3 space-y-2  backdrop-blur-md bg-black/10 md:bg-white/10 rounded-2xl text-gray-100'>
                         {
                             user?.uid &&
                             <>

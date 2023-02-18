@@ -4,7 +4,7 @@ import Stats from './Stats';
 
 const Home = () => {
 	return (
-		<div className='pl-8 pr-5 py-3 z-20'>
+		<div className=' py-3 z-20'>
 			<div className="bg-gradient-to-r from-violet-600 to-pink-500 z-20 relative rounded-2xl shadow-2xl w-full text-gray-100">
 				<div className="container flex flex-col justify-center p-6 mx-auto py-8 lg:flex-row lg:justify-between">
 					<div className="flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left">
@@ -17,7 +17,7 @@ const Home = () => {
 							{/* <br className="hidden md:inline lg:hidden">turpis pulvinar, est scelerisque ligula sem */}
 						</p>
 						<div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-							<Link rel="noopener noreferrer" to="/authentication" className="px-8 py-3 text-lg font-semibold rounded bg-gray-800 text-gray-100">Get Started</Link>
+							<Link  to="/auth" className="px-8 py-3 text-lg font-semibold rounded bg-gray-800 text-gray-100">Get Started</Link>
 						</div>
 					</div>
 					

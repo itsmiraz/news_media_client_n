@@ -11,7 +11,7 @@ const BecomeAReporter = () => {
     return (
         <div>
             <section className="py-6  backdrop-blur-md bg-black/40 rounded-md text-gray-100">
-                <div className="container mx-auto flex flex-col items-center justify-center p-4 space-y-8 md:p-10 md:px-24 xl:px-48">
+                <div className="container mx-auto flex flex-col items-center justify-center p-4 space-y-8 md:p-10 md:px-10 xl:px-10">
                     <h1 className="text-5xl font-bold leading-none text-center">Become a Reporter ?</h1>
                     <p className="pt-2 font-semibold text-center">If you want to be a reporter for us you have to provide your some personal details. And Our Moderator's will verify that.</p>
 
